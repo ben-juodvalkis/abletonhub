@@ -24,10 +24,6 @@
 	const shown = $derived(filtered.reduce((n, s) => n + s.links.length, 0));
 	const firstMatch = $derived(filtered[0]?.links[0]);
 
-	// Every track gets the same number of slots, like scenes in a Live Set;
-	// short tracks are padded with empty slots.
-	const rows = $derived(Math.max(0, ...filtered.map((s) => s.links.length)));
-
 	function onKeydown(e: KeyboardEvent) {
 		if (e.key === '/' && document.activeElement !== input) {
 			e.preventDefault();
@@ -115,9 +111,6 @@
 									<span class="name">{link.title}</span>
 								</a>
 							</li>
-						{/each}
-						{#each { length: rows - section.links.length } as _}
-							<li class="slot" aria-hidden="true"><span class="stop"></span></li>
 						{/each}
 					</ul>
 				</section>
@@ -330,14 +323,26 @@
 		padding: 4px;
 	}
 
+	/* Tracks in a row stretch to the tallest one, and each list's background
+	   draws empty clip slots (stop square + scene line) to fill the gap, like
+	   the unused slots of a Session View. */
 	.tracks {
+		--slot-h: 26px;
+		--stop: color-mix(in srgb, var(--slot-button) 55%, transparent);
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(168px, 1fr));
 		gap: 4px 2px;
-		align-items: start;
+	}
+
+	@media (min-width: 1100px) {
+		.tracks {
+			grid-template-columns: repeat(5, minmax(0, 1fr));
+		}
 	}
 
 	.track {
+		display: flex;
+		flex-direction: column;
 		min-width: 0;
 	}
 
@@ -360,15 +365,27 @@
 		list-style: none;
 		margin: 0;
 		padding: 0;
-		background: var(--scene-line);
+		flex: 1;
 		display: grid;
 		grid-template-columns: minmax(0, 1fr);
+		align-content: start;
 		gap: 1px;
 		border-bottom: 1px solid var(--scene-line);
+		background:
+			repeating-linear-gradient(
+					transparent 0 calc(var(--slot-h) / 2 - 3.5px),
+					var(--stop) 0 calc(var(--slot-h) / 2 + 3.5px),
+					transparent 0 calc(var(--slot-h) + 1px)
+				)
+				6px 0 / 7px 100% no-repeat,
+			repeating-linear-gradient(
+				var(--surface-hi) 0 var(--slot-h),
+				var(--scene-line) 0 calc(var(--slot-h) + 1px)
+			);
 	}
 
 	li {
-		height: 26px;
+		height: var(--slot-h);
 	}
 
 	.clip {
@@ -405,21 +422,6 @@
 	.clip:focus-visible,
 	.clip.selected {
 		box-shadow: inset 0 0 0 2px var(--selection);
-	}
-
-	.slot {
-		display: flex;
-		align-items: center;
-		padding: 0 6px;
-		background: var(--surface-hi);
-	}
-
-	.stop {
-		width: 7px;
-		height: 7px;
-		border-radius: 1px;
-		background: var(--slot-button);
-		opacity: 0.55;
 	}
 
 	.empty {
@@ -492,12 +494,8 @@
 		.tracks {
 			grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
 		}
-		li {
-			height: 32px;
-		}
-		/* Tracks wrap into rows here, so padding them to equal length is just noise. */
-		.slot {
-			display: none;
+		.tracks {
+			--slot-h: 32px;
 		}
 	}
 </style>
