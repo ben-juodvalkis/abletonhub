@@ -39,7 +39,11 @@ export const sections: Section[] = [
 			{ title: 'Beta program', url: 'https://www.ableton.com/beta/', note: 'Centercode sign-up' },
 			{ title: 'Packs', url: 'https://www.ableton.com/en/packs/' },
 			{ title: 'Blog', url: 'https://www.ableton.com/en/blog/' },
-			{ title: 'Free trial', url: 'https://www.ableton.com/en/trial/', note: '30-day Live 12 Suite' }
+			{
+				title: 'Free trial',
+				url: 'https://www.ableton.com/en/trial/',
+				note: '30-day Live 12 Suite'
+			}
 		]
 	},
 	{
@@ -213,7 +217,11 @@ export const sections: Section[] = [
 				url: 'https://github.com/zsteinkamp/m4l-typescript-base'
 			},
 			{ title: 'Max SDK', url: 'https://github.com/Cycling74/max-sdk', note: 'C externals' },
-			{ title: 'Min-DevKit', url: 'https://github.com/Cycling74/min-devkit', note: 'C++ externals' },
+			{
+				title: 'Min-DevKit',
+				url: 'https://github.com/Cycling74/min-devkit',
+				note: 'C++ externals'
+			},
 			{
 				title: 'MIDI Hub for Max',
 				url: 'https://github.com/ben-juodvalkis/midi-hub-max',
