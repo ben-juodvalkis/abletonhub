@@ -10,12 +10,16 @@ export type Link = {
 export type Section = {
 	id: string;
 	title: string;
+	// Track color. Values come from the clip palette in Live's Classic themes
+	// (Clip1–Clip16 in the .ask files); clip text is always black on these.
+	color: string;
 	links: Link[];
 };
 
 export const sections: Section[] = [
 	{
 		id: 'ableton',
+		color: '#e0aa2a',
 		title: 'Ableton',
 		links: [
 			{ title: 'Ableton.com', url: 'https://www.ableton.com/' },
@@ -36,6 +40,7 @@ export const sections: Section[] = [
 	},
 	{
 		id: 'extensions',
+		color: '#6baace',
 		title: 'Extensions',
 		links: [
 			{
@@ -61,6 +66,7 @@ export const sections: Section[] = [
 	},
 	{
 		id: 'max',
+		color: '#81d24c',
 		title: 'Max for Live',
 		links: [
 			{ title: 'maxforlive.com', url: 'https://maxforlive.com/', note: 'Community device library' },
@@ -70,11 +76,17 @@ export const sections: Section[] = [
 			{ title: 'LiveAPI (JS)', url: 'https://docs.cycling74.com/apiref/js/liveapi/' },
 			{ title: 'Cycling ’74 forums', url: 'https://cycling74.com/forums' },
 			{ title: 'M4L Connection Kit', url: 'https://github.com/Ableton/m4l-connection-kit' },
-			{ title: 'maxdevtools', url: 'https://github.com/Ableton/maxdevtools' }
+			{ title: 'maxdevtools', url: 'https://github.com/Ableton/maxdevtools' },
+			{
+				title: 'MIDI Hub for Max',
+				url: 'https://github.com/ben-juodvalkis/midi-hub-max',
+				note: 'Node for Max MIDI routing'
+			}
 		]
 	},
 	{
 		id: 'control',
+		color: '#afb95b',
 		title: 'Scripting & control',
 		links: [
 			{
@@ -101,6 +113,7 @@ export const sections: Section[] = [
 	},
 	{
 		id: 'ai',
+		color: '#ff5f80',
 		title: 'AI',
 		links: [
 			{ title: 'Producer Pal', url: 'https://producer-pal.org/', note: 'AI assistant for Live' },
@@ -109,6 +122,7 @@ export const sections: Section[] = [
 	},
 	{
 		id: 'community',
+		color: '#b8ce93',
 		title: 'Community',
 		links: [
 			{
@@ -121,19 +135,15 @@ export const sections: Section[] = [
 		]
 	},
 	{
-		id: 'mine',
-		title: 'My tools',
+		id: 'files',
+		color: '#ffec75',
+		title: 'Files & Sets',
 		links: [
 			{
-				title: 'Ableton Web Components',
-				url: 'https://ben-juodvalkis.github.io/ableton-web-components/'
-			},
-			{
-				title: 'Command Palette',
-				url: 'https://github.com/ben-juodvalkis/ableton-command-palette'
-			},
-			{ title: 'Device Creator', url: 'https://github.com/ben-juodvalkis/Ableton-Device-Creator' },
-			{ title: 'MIDI Hub for Max', url: 'https://github.com/ben-juodvalkis/midi-hub-max' }
+				title: 'Ableton Device Creator',
+				url: 'https://github.com/ben-juodvalkis/Ableton-Device-Creator',
+				note: 'Script .adg racks & .adv presets'
+			}
 		]
 	}
 ];
