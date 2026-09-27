@@ -16,6 +16,26 @@ npm run check && npm run lint
 npm run deploy        # build + wrangler deploy to abletonhub.org
 ```
 
+## Submissions
+
+"+ Submit" on the page posts to `/api/submit`, which stores entries in the
+`abletonhub` D1 database (`migrations/`) as `pending`. Nothing is published
+automatically. To review:
+
+```sh
+npm run submissions   # list pending entries
+```
+
+Approve one by adding it to `src/lib/links.ts`, then mark it handled:
+
+```sh
+npx wrangler d1 execute abletonhub --remote --command "UPDATE submissions SET status = 'added' WHERE id = 1"
+```
+
+(`'rejected'` for ones you pass on.) Spam protection: a hidden trap field, a
+3-second minimum between opening the dialog and submitting, and a limit of 3
+submissions per minute per client.
+
 ## Dev
 
 ```sh

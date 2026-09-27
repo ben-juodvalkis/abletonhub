@@ -8,6 +8,22 @@
 		"binding": "ASSETS",
 		"directory": ".svelte-kit/cloudflare"
 	},
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "abletonhub",
+			"database_id": "5bedffc0-5843-49d9-831a-b534554ae215",
+			"migrations_dir": "migrations"
+		}
+	],
+	// Per-client cap on the submit endpoint.
+	"ratelimits": [
+		{
+			"name": "SUBMIT_LIMITER",
+			"namespace_id": "1001",
+			"simple": { "limit": 3, "period": 60 }
+		}
+	],
 	"routes": [
 		{ "pattern": "abletonhub.org", "custom_domain": true },
 		{ "pattern": "www.abletonhub.org", "custom_domain": true }

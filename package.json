@@ -14,7 +14,8 @@
 		"format": "prettier --write .",
 		"gen": "wrangler types",
 		"check-links": "node scripts/check-links.ts",
-		"deploy": "npm run build && wrangler deploy"
+		"deploy": "npm run build && wrangler deploy",
+		"submissions": "wrangler d1 execute abletonhub --remote --command \"SELECT id, created_at, title, url, section, note, contact FROM submissions WHERE status = 'pending' ORDER BY created_at\""
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-cloudflare": "^7.2.8",

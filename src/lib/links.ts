@@ -68,13 +68,11 @@ export const sections: Section[] = [
 				url: 'https://www.ableton.com/en/certified-training/',
 				note: 'Find a teacher near you'
 			},
-			{ title: 'Ableton on YouTube', url: 'https://www.youtube.com/@Ableton' },
 			{
 				title: 'Cycling ’74 Learn',
 				url: 'https://docs.cycling74.com/learn/',
 				note: 'Max, MSP & RNBO tutorials'
 			},
-			{ title: 'Cycling ’74 on YouTube', url: 'https://www.youtube.com/@C74connect' },
 			{
 				title: 'JavaScript in Live',
 				url: 'https://adammurray.link/max-for-live/',
@@ -84,11 +82,39 @@ export const sections: Section[] = [
 				title: 'Max Cookbook',
 				url: 'https://music.arts.uci.edu/dobrian/maxcookbook/',
 				note: 'Classic example patches'
+			}
+		]
+	},
+	{
+		id: 'youtube',
+		color: '#dc4848',
+		title: 'YouTube',
+		links: [
+			{ title: 'Ableton', url: 'https://www.youtube.com/@Ableton', note: 'Official channel' },
+			{
+				title: 'Cycling ’74',
+				url: 'https://www.youtube.com/@C74connect',
+				note: 'Official Max channel'
+			},
+			{
+				title: 'ELPHNT',
+				url: 'https://www.youtube.com/@ELPHNT',
+				note: 'Certified Trainer, M4L tools'
+			},
+			{
+				title: 'Ableton Tips by PML',
+				url: 'https://www.youtube.com/@AbletonTips',
+				note: 'Live tips & techniques'
+			},
+			{
+				title: 'Seed To Stage',
+				url: 'https://www.youtube.com/@SeedToStage',
+				note: 'Live performance & racks'
 			},
 			{
 				title: 'Amazing Max Stuff',
 				url: 'https://www.youtube.com/@AmazingMaxStuff',
-				note: 'Max tutorials on YouTube'
+				note: 'Max/MSP tutorials'
 			}
 		]
 	},

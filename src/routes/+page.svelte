@@ -1,9 +1,22 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { sections, type Link, type Section } from '$lib/links';
+	import SubmitDialog from '$lib/SubmitDialog.svelte';
 
 	let query = $state('');
 	let input: HTMLInputElement;
 	let info = $state<{ link: Link; section: Section } | null>(null);
+	let submitDialog: SubmitDialog;
+	// Set when a no-JavaScript form post redirects back with ?submitted=.
+	let submitted = $state<'ok' | 'error' | null>(null);
+
+	onMount(() => {
+		const s = new URLSearchParams(location.search).get('submitted');
+		if (s === 'ok' || s === 'error') {
+			submitted = s;
+			history.replaceState(null, '', location.pathname);
+		}
+	});
 
 	const total = sections.reduce((n, s) => n + s.links.length, 0);
 	const host = (url: string) => new URL(url).hostname.replace(/^www\./, '');
@@ -78,6 +91,7 @@
 				/>
 				<kbd aria-hidden="true">/</kbd>
 			</label>
+			<button class="submit" type="button" onclick={() => submitDialog.open()}>+ Submit</button>
 		</div>
 	</header>
 
@@ -120,7 +134,14 @@
 
 	<footer class="panel statusbar">
 		<div class="infoview" aria-live="polite">
-			{#if info}
+			{#if submitted}
+				<strong>{submitted === 'ok' ? 'Thanks!' : 'Not sent'}</strong>
+				<span>
+					{submitted === 'ok'
+						? 'Your project is in the review queue.'
+						: 'Something was missing or invalid. Please try again.'}
+				</span>
+			{:else if info}
 				<strong>{info.link.title}</strong>
 				<span>{info.link.note ? `${info.link.note} · ` : ''}{host(info.link.url)}</span>
 			{:else}
@@ -135,6 +156,8 @@
 		</p>
 	</footer>
 </div>
+
+<SubmitDialog bind:this={submitDialog} />
 
 <style>
 	/* Colors are read from Live 12's bundled "Classic Medium Light" / "Classic
@@ -154,6 +177,7 @@
 		--lcd-fg: #ffb901;
 		--chosen: #ffb901;
 		--selection: #cdf8ff;
+		--alert: #ff7d43;
 		color-scheme: light;
 	}
 
@@ -173,6 +197,7 @@
 			--lcd-fg: #ff9c39;
 			--chosen: #ff9c39;
 			--selection: #96d4e8;
+			--alert: #e76942;
 			color-scheme: dark;
 		}
 	}
@@ -260,7 +285,7 @@
 		display: flex;
 		align-items: center;
 		gap: 6px;
-		flex: 0 1 380px;
+		flex: 0 1 460px;
 		min-width: 0;
 	}
 
@@ -316,6 +341,35 @@
 		pointer-events: none;
 	}
 
+	.submit {
+		flex: none;
+		height: 22px;
+		padding: 0 8px;
+		border: 1px solid var(--frame);
+		border-radius: 2px;
+		background: var(--control);
+		color: var(--text);
+		font: inherit;
+		font-weight: 600;
+		cursor: pointer;
+	}
+
+	.submit:hover {
+		background: var(--chosen);
+		color: #000;
+	}
+
+	/* iOS zooms into any field under 16px. */
+	@media (pointer: coarse) {
+		.search input {
+			height: 32px;
+			font-size: 16px;
+		}
+		.submit {
+			height: 32px;
+		}
+	}
+
 	/* Session view */
 
 	.session {
@@ -336,7 +390,7 @@
 
 	@media (min-width: 1100px) {
 		.tracks {
-			grid-template-columns: repeat(5, minmax(0, 1fr));
+			grid-template-columns: repeat(6, minmax(0, 1fr));
 		}
 	}
 
